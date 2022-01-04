@@ -5,7 +5,7 @@
 import aoc_util
 
 
-year = 2020
+year = 2019
 day = 0
 data_str = """"""
 
