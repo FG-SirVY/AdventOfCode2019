@@ -39,9 +39,9 @@ class PipeExit:
 
     def read(self):
         if len(self.queue) == 0:
-            return (-1, 0)
+            return None
             
-        return (0, self.queue.popleft())
+        return self.queue.popleft()
 
 
 class Interpreter:
@@ -135,13 +135,13 @@ class Instruction:
         target = self.get_param(0, dereference=False)
         input = self.memory.in_pipe.read()
 
-        if input[0] == -1:
-            return -1
+        if input == None:
+            return False
 
-        self.set_value(target, input[1])
+        self.set_value(target, input)
         self.memory.instr_ptr += 2
 
-        return 0
+        return True
 
 
     def output(self):
@@ -206,7 +206,7 @@ class Instruction:
         elif self.op == 2:
             self.multiply()
         elif self.op == 3:
-            if self.input() == -1:
+            if not self.input():
                 return False
         elif self.op == 4:
             self.output()
